@@ -9,4 +9,6 @@ bool avl_inserir(AVL *avl, int chave);
 bool avl_remover(AVL *avl, int chave);
 bool avl_busca(AVL *avl, int chave);
 void avl_imprimir(AVL *avl);
+void copy_avl(AVL *source, AVL *dest);
+void intersect_avl(AVL *source, AVL *comp, AVL *dest);
 #endif
