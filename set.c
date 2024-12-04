@@ -4,11 +4,14 @@
 #define avl 0
 #define rubronegra 1
 
+// struct do set, contém um ponteiro void para o TAD escolhido, determinado por
+// type
 struct set_ {
   void *tree;
   int type;
 };
 
+// cria e configura o set de acordo com input
 SET *set_criar(int type) {
   SET *set = malloc(sizeof(SET));
 
@@ -21,6 +24,7 @@ SET *set_criar(int type) {
   return set;
 }
 
+// insere chave no set
 bool set_inserir(SET *set, int chave) {
   if (set == NULL) {
     return false;
@@ -31,6 +35,7 @@ bool set_inserir(SET *set, int chave) {
     return false;
 }
 
+// remove chave do set
 bool set_remover(SET *set, int chave) {
   if (set == NULL) {
     return false;
@@ -42,6 +47,7 @@ bool set_remover(SET *set, int chave) {
     return false;
 }
 
+// imprime o set, por sinal em ordem
 void set_imprimir(SET *set) {
   if (set == NULL) {
     return;
@@ -52,6 +58,7 @@ void set_imprimir(SET *set) {
   }
 }
 
+// retorna um set contendo a união dos elementos de set 1 e set 2
 SET *set_uniao(SET *set1, SET *set2) {
   if (set1 == NULL) { // sets must be of the same type?
     return NULL;
@@ -67,6 +74,7 @@ SET *set_uniao(SET *set1, SET *set2) {
   return uniao;
 }
 
+// retorna um set contendo a interseção dos elementos do set 1 e do set 2
 SET *set_intersecao(SET *set1, SET *set2) {
   if (set1 == NULL || set2 == NULL) {
     return NULL;
