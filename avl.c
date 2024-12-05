@@ -184,7 +184,7 @@ NO *max_esq(NO *raiz, NO *prev, NO *curr) {
 
 // função para remover nó com certa chave de uma subárvore
 bool remover_no(NO **raiz, int chave) { // bool?
-  if (raiz == NULL) {
+  if (*raiz == NULL) {
     return false;
   }
 
@@ -294,26 +294,17 @@ bool avl_busca(AVL *avl, int chave) {
   return busca_no(avl->raiz, chave);
 }
 
-// by claude, for debugging purposes
-void print_tree_helper(NO *node, int depth) {
-  if (node == NULL)
+// imprime a árvore bonitinho
+void imprimir_subarvore(NO *no, int max_altura) {
+  if (no == NULL) {
     return;
-
-  // Print right subtree first (top of the visual tree)
-  if (node->dir != NULL) {
-    print_tree_helper(node->dir, depth + 1);
   }
-
-  // Print current node with appropriate indentation
-  for (int i = 0; i < depth; i++) {
-    printf("    ");
+  imprimir_subarvore(no->dir, max_altura);
+  for (int i = 0; i < max_altura - no->altura; i++) {
+    printf("     ");
   }
-  printf("%d\n", node->chave);
-
-  // Print left subtree
-  if (node->esq != NULL) {
-    print_tree_helper(node->esq, depth + 1);
-  }
+  printf("%i\n", no->chave);
+  imprimir_subarvore(no->esq, max_altura);
 }
 
 void avl_imprimir_arvore(AVL *avl) {
@@ -322,7 +313,7 @@ void avl_imprimir_arvore(AVL *avl) {
     return;
   }
 
-  print_tree_helper(avl->raiz, 0);
+  imprimir_subarvore(avl->raiz, avl->raiz->altura);
 }
 
 // imprime nó em ordem
@@ -379,7 +370,7 @@ void intersect_no(NO *no, AVL *comp, AVL *dest) {
   intersect_no(no->dir, comp, dest);
 }
 
-// insere todos os nós presentes tanto na AVLsource e comp em uma AVL dest
+// insere todos os nós presentes tanto na AVL source e comp em uma AVL dest
 void intersect_avl(AVL *source, AVL *comp, AVL *dest) {
   if (source == NULL || comp == NULL || dest == NULL) {
     return;
