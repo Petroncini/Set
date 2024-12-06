@@ -1,5 +1,4 @@
 #include "rbt.h"
-#include <ctime>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -53,7 +52,7 @@ void apagar_no(NO **no) {
 }
 
 // funcao para apagar a rbt, inteira usando a funcao apagar_no na raiz
-void avl_apagar(RBT **rbt) {
+void rbt_apagar(RBT **rbt) {
   apagar_no(&(*rbt)->raiz);
   free(*rbt);
   *rbt = NULL;
@@ -200,4 +199,63 @@ bool rbt_remover(RBT *rbt, int chave) {
   rbt->raiz = remover_no(rbt->raiz, chave);
   rbt->raiz->cor = 0;
   return true;
+}
+
+// busca recursiva em subárvore por chave
+bool busca_no(NO *raiz, int chave) {
+  if (raiz == NULL) {
+    return false;
+  }
+  bool found = false;
+
+  if (chave == raiz->chave) {
+    found = true;
+  } else if (chave < raiz->chave) {
+    found = found || busca_no(raiz->esq, chave);
+  } else {
+    found = found || busca_no(raiz->dir, chave);
+  }
+
+  return found;
+}
+
+// busca por chave em rbt realizando busca em sua raíz
+bool rbt_busca(RBT *rbt, int chave) {
+  if (rbt == NULL) {
+    return false;
+  }
+
+  return busca_no(rbt->raiz, chave);
+}
+
+// imprime a árvore bonitinho
+void printSpaces(int count) {
+    for (int i = 0; i < count; i++) {
+        printf(" ");
+    }
+}
+
+void imprimir_no(NO *raiz, int nivel) {
+  if (raiz == NULL) {
+    printSpaces(nivel * 4); // 4 espaços por nível
+    printf("NULL\n");
+    return;
+  }
+
+  // Imprimir o nó atual com sua cor
+  printSpaces(nivel * 4);
+  printf("%d (%s)\n", raiz->chave, raiz->cor ? "R" : "B");
+
+  // Imprimir subárvores esquerda e direita
+  imprimir_no(raiz->esq, nivel + 1);
+  imprimir_no(raiz->dir, nivel + 1);
+}
+
+void rbt_imprimir(RBT *rbt) {
+  if (rbt == NULL) {
+    printf("Árvore inexistente!\n");
+    return;
+  }
+
+  imprimir_no(rbt->raiz, 0);
 }
