@@ -1,4 +1,5 @@
 #include "rbt.h"
+#include <ctime>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -95,6 +96,13 @@ bool eh_vermelho(NO *no) {
   return (no->cor == 1);
 }
 
+NO *ajeita(NO *no) {
+  if (eh_vermelho(no->dir) && !eh_vermelho(no->esq)) no = rbt_rot_esq(no);
+  if (eh_vermelho(no->esq) && eh_vermelho(no->esq->esq)) no = rbt_rot_dir(no);
+  if (eh_vermelho(no->esq) && eh_vermelho(no->dir)) inverte(no);
+  return no;
+}
+
 NO *inserir_no(NO *raiz, int chave) {
   if (raiz == NULL) return criar_no(chave);
 
@@ -103,11 +111,7 @@ NO *inserir_no(NO *raiz, int chave) {
   else if (chave > raiz->chave)
     raiz->dir = inserir_no(raiz->dir, chave);
 
-  if (eh_vermelho(raiz->dir) && !eh_vermelho(raiz->esq)) raiz = rbt_rot_esq(raiz);
-  if (eh_vermelho(raiz->esq) && eh_vermelho(raiz->esq->esq)) raiz = rbt_rot_dir(raiz);
-  if (eh_vermelho(raiz->esq) && eh_vermelho(raiz->dir)) inverte(raiz);
-
-  return raiz;
+  return ajeita(raiz);
 }
 
 bool rbt_inserir(RBT *rbt, int chave) {
@@ -120,7 +124,7 @@ bool rbt_inserir(RBT *rbt, int chave) {
   return true;
 }
 
-NO* move_vermelho_esq(NO* no) {
+NO *move_vermelho_esq(NO *no) {
   inverte(no);
   if (eh_vermelho(no->dir->esq)) {
     no->dir = rbt_rot_dir(no->dir);
@@ -130,7 +134,7 @@ NO* move_vermelho_esq(NO* no) {
   return no;
 } 
 
-NO* move_vermelho_dir(NO* no) {
+NO *move_vermelho_dir(NO *no) {
   inverte(no);
   if (eh_vermelho(no->esq->esq)) {
     no = rbt_rot_dir(no);
@@ -139,13 +143,61 @@ NO* move_vermelho_dir(NO* no) {
   return no;
 }
 
-NO *remover_no(NO *raiz, int chave) {
+NO *min(NO* raiz) {
+  while (raiz->esq) raiz = raiz->esq;
+  return raiz;
+}
 
+NO *remover_min(NO *raiz) {
+  if (raiz->esq == NULL) {
+    free(raiz);
+    return NULL;
+  }
+
+  if (!eh_vermelho(raiz->esq) && !eh_vermelho(raiz->esq->esq))
+    raiz = move_vermelho_esq(raiz);
+
+  raiz->esq = remover_min(raiz->esq);
+
+  return ajeita(raiz);
+}
+
+NO *remover_no(NO *raiz, int chave) {
+  if (raiz == NULL) return NULL;
+
+  if (chave < raiz->chave) {
+    if (!eh_vermelho(raiz->esq) && !eh_vermelho(raiz->esq->esq)) {
+      raiz = move_vermelho_esq(raiz);
+    }
+    raiz->esq = remover_no(raiz->esq, chave);
+  } else {
+    if (eh_vermelho(raiz->esq)) {
+      raiz = rbt_rot_dir(raiz);
+    }
+    if (chave == raiz->chave && raiz->dir == NULL) {
+      free(raiz);
+      return NULL;
+    }
+    if (!eh_vermelho(raiz->dir) && !eh_vermelho(raiz->dir->esq)) {
+      raiz = move_vermelho_dir(raiz);
+    }
+    if (chave == raiz->chave) {
+      NO *x = min(raiz->dir);
+      raiz->chave = x->chave;
+      raiz->dir = remover_min(raiz->dir);
+    } else {
+      raiz->dir = remover_no(raiz->dir, chave);
+    }
+  }
+  return ajeita(raiz);
 }
 
 bool rbt_remover(RBT *rbt, int chave) {
-  if (rbt == NULL)
+  if (rbt == NULL) {
     return false;
+  }
 
-  return 
+  rbt->raiz = remover_no(rbt->raiz, chave);
+  rbt->raiz->cor = 0;
+  return true;
 }
