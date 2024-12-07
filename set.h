@@ -10,5 +10,4 @@ void set_apagar(SET **set);
 void set_imprimir(SET *set);
 SET *set_uniao(SET *set1, SET *set2);
 SET *set_interseccao(SET *set1, SET *set2);
-void set_imprimir_arvore(SET *set);
 #endif

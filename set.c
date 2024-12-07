@@ -62,17 +62,6 @@ void set_imprimir(SET *set) {
     rbt_imprimir(set->tree);
 }
 
-void set_imprimir_arvore(SET *set) {
-  if (set == NULL) {
-    return;
-  }
-
-  if (set->type == avl)
-    avl_imprimir_arvore(set->tree);
-  else
-    rbt_imprimir_arvore(set->tree);
-}
-
 bool set_pertence(SET *set, int chave) {
   if (set == NULL) {
     return false;
