@@ -295,16 +295,19 @@ bool avl_busca(AVL *avl, int chave) {
 }
 
 // imprime a árvore bonitinho
-void imprimir_subarvore(NO *no, int max_altura) {
+void imprimir_subarvore(NO *no, int profundidade) {
   if (no == NULL) {
+    printf("\n");
     return;
   }
-  imprimir_subarvore(no->dir, max_altura);
-  for (int i = 0; i < max_altura - no->altura; i++) {
+  imprimir_subarvore(no->dir, profundidade + 1);
+  for (int i = 0; i < profundidade; i++) {
     printf("     ");
   }
-  printf("%i\n", no->chave);
-  imprimir_subarvore(no->esq, max_altura);
+
+  printf("%i \n", no->chave);
+
+  imprimir_subarvore(no->esq, profundidade + 1);
 }
 
 void avl_imprimir_arvore(AVL *avl) {
@@ -313,7 +316,7 @@ void avl_imprimir_arvore(AVL *avl) {
     return;
   }
 
-  imprimir_subarvore(avl->raiz, avl->raiz->altura);
+  imprimir_subarvore(avl->raiz, 0);
 }
 
 // imprime nó em ordem
