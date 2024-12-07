@@ -1,8 +1,7 @@
 #include "set.h"
 #include <stdio.h>
-#include <stdlib.h>
 
-int main(int argc, char *argv[]) {
+int main() {
   SET *A, *B;
   int n_a, n_b, x;
   int op;
@@ -83,10 +82,11 @@ int main(int argc, char *argv[]) {
     case 5: {
       // inserir
       int elemento;
-      printf("Elemento para remover: ");
+      printf("Elemento para inserir: ");
       scanf("%d", &elemento);
-      printf("Set com \"%d\": ", elemento);
       set_inserir(A, elemento);
+      printf("Set com \"%d\": ", elemento);
+      set_imprimir(A);
       break;
     }
 

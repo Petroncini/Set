@@ -192,13 +192,13 @@ static NO *remover_no(NO *raiz, int chave) {
 }
 
 bool rbt_remover(RBT *rbt, int chave) {
-  if (rbt == NULL) {
-    return false;
-  }
-
-  rbt->raiz = remover_no(rbt->raiz, chave);
-  rbt->raiz->cor = 0;
-  return true;
+    if (rbt == NULL) return false;
+    
+    if (!rbt_busca(rbt, chave)) return false;
+    
+    rbt->raiz = remover_no(rbt->raiz, chave);
+    if (rbt->raiz) rbt->raiz->cor = 0;
+    return true;
 }
 
 // busca recursiva em subárvore por chave
@@ -227,6 +227,32 @@ bool rbt_busca(RBT *rbt, int chave) {
 
   return busca_no(rbt->raiz, chave);
 }
+
+// imprime a árvore bonitinho
+static void imprimir_subarvore(NO *no, int profundidade) {
+  if (no == NULL) {
+    printf("\n");
+    return;
+  }
+  imprimir_subarvore(no->dir, profundidade + 1);
+  for (int i = 0; i < profundidade; i++) {
+    printf("     ");
+  }
+
+  printf("%i \n", no->chave);
+
+  imprimir_subarvore(no->esq, profundidade + 1);
+}
+
+void rbt_imprimir_arvore(RBT *rbt) {
+  if (rbt == NULL || rbt->raiz == NULL) {
+    printf("Árvore vazia\n");
+    return;
+  }
+
+  imprimir_subarvore(rbt->raiz, 0);
+}
+
 
 // imprime nó em ordem
 static void imprimir_no(NO *raiz) { // em ordem

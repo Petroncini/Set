@@ -295,7 +295,7 @@ bool avl_busca(AVL *avl, int chave) {
 }
 
 // imprime a árvore bonitinho
-void imprimir_subarvore(NO *no, int profundidade) {
+static void imprimir_subarvore(NO *no, int profundidade) {
   if (no == NULL) {
     printf("\n");
     return;
