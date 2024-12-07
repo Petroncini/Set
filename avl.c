@@ -183,16 +183,13 @@ NO *max_esq(NO *raiz, NO *prev, NO *curr) {
 }
 
 // função para remover nó com certa chave de uma subárvore
-static bool remover_no(NO **raiz, int chave) { // bool?
+static NO *remover_no(NO **raiz, int chave) { // bool?
   if (*raiz == NULL) {
     return false;
   }
 
-  bool removed = false;
-
   if (chave == (*raiz)->chave) { // se encontrar a chave, remova
     NO *p = *raiz;               // guardar temporariamene o nó a ser removido
-    removed = true;
 
     if ((*raiz)->esq == NULL ||
         (*raiz)->dir == NULL) { // se algum dos filhos dos nó for nulo
@@ -212,16 +209,15 @@ static bool remover_no(NO **raiz, int chave) { // bool?
 
       (*raiz)->chave =
           temp->chave; // troque a chave da raiz para a chave desse maior nó
-
       remover_no(&(*raiz)->esq,
                  temp->chave); // remova esse maior nó (recursivamente)
     }
 
   } else if (chave < (*raiz)->chave) { // se a chave for menor, procure para
                                        // remover na esquerda
-    removed = removed || remover_no(&(*raiz)->esq, chave);
+    (*raiz)->esq = remover_no(&(*raiz)->esq, chave);
   } else { // se a chave for maio, procure para remover na direita
-    removed = removed || remover_no(&(*raiz)->dir, chave);
+    (*raiz)->dir = remover_no(&(*raiz)->dir, chave);
   }
 
   // se o nó atual não foi removido, ou foi substituido por um filho
@@ -254,7 +250,7 @@ static bool remover_no(NO **raiz, int chave) { // bool?
     }
   }
 
-  return removed;
+  return *raiz;
 }
 
 // função para remover chave de avl usando função recursiva de remoção no nó da
@@ -263,7 +259,7 @@ bool avl_remover(AVL *avl, int chave) {
   if (avl == NULL) {
     return false;
   } else {
-    return remover_no(&avl->raiz, chave);
+    return ((avl->raiz = remover_no(&avl->raiz, chave)) != NULL);
   }
 }
 
@@ -295,7 +291,7 @@ bool avl_busca(AVL *avl, int chave) {
 }
 
 // imprime a árvore bonitinho
-static void imprimir_subarvore(NO *no, int profundidade) {
+void imprimir_subarvore(NO *no, int profundidade) {
   if (no == NULL) {
     printf("\n");
     return;
