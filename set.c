@@ -58,6 +58,18 @@ void set_imprimir(SET *set) {
   }
 }
 
+bool set_pertence(SET *set, int chave) {
+  if (set == NULL) {
+    return false;
+  }
+
+  if (set->type == avl) {
+    return avl_pertence(set->tree, chave);
+  } else {
+    return false;
+  }
+}
+
 // retorna um set contendo a união dos elementos de set 1 e set 2
 SET *set_uniao(SET *set1, SET *set2) {
   if (set1 == NULL) { // sets must be of the same type?
@@ -75,7 +87,7 @@ SET *set_uniao(SET *set1, SET *set2) {
 }
 
 // retorna um set contendo a interseção dos elementos do set 1 e do set 2
-SET *set_intersecao(SET *set1, SET *set2) {
+SET *set_interseccao(SET *set1, SET *set2) {
   if (set1 == NULL || set2 == NULL) {
     return NULL;
   }

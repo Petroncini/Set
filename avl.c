@@ -323,7 +323,7 @@ void imprimir_no(NO *raiz) { // em ordem
   }
 
   imprimir_no(raiz->esq);
-  printf("%i\n", raiz->chave);
+  printf("%i ", raiz->chave);
   imprimir_no(raiz->dir);
 }
 
@@ -334,6 +334,7 @@ void avl_imprimir(AVL *avl) {
   }
 
   imprimir_no(avl->raiz);
+  printf("\n");
 }
 
 // insere todo nó de uma subárvore dada, em uma outra AVL, em ordem
@@ -377,4 +378,28 @@ void intersect_avl(AVL *source, AVL *comp, AVL *dest) {
   }
 
   intersect_no(source->raiz, comp, dest);
+}
+
+bool no_pertence(NO *raiz, int chave) {
+  if (raiz == NULL) {
+    return false;
+  }
+
+  if (chave == raiz->chave) {
+    return true;
+  }
+
+  if (chave < raiz->chave) {
+    return no_pertence(raiz->esq, chave);
+  } else {
+    return no_pertence(raiz->dir, chave);
+  }
+}
+
+bool avl_pertence(AVL *avl, int chave) {
+  if (avl == NULL) {
+    return NULL;
+  }
+
+  return no_pertence(avl->raiz, chave);
 }
