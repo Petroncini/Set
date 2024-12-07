@@ -2,7 +2,7 @@
 #define SET_H
 #include <stdbool.h>
 typedef struct set_ SET;
-SET *set_criar(int type);
+SET *set_criar(bool type);
 bool set_pertence(SET *set, int chave);
 bool set_inserir(SET *set, int chave);
 bool set_remover(SET *set, int chave);

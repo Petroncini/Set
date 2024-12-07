@@ -28,7 +28,7 @@ AVL *avl_criar(void) {
 }
 
 // funcao para criar um no e inicializar os seus valores
-NO *criar_no(int chave) {
+static NO *criar_no(int chave) {
   NO *no = malloc(sizeof(NO));
 
   if (no != NULL) {
@@ -42,7 +42,7 @@ NO *criar_no(int chave) {
 }
 
 // funcao para recursivamente apagar os filhos de um nó, então ele mesmo
-void apagar_no(NO **no) {
+static void apagar_no(NO **no) {
   if (no != NULL) {
     apagar_no(&(*no)->esq);
     apagar_no(&(*no)->dir);
@@ -116,7 +116,7 @@ int calc_fb(NO *no) {
 }
 
 // função para inserir no com chave *chave* em uma subárvore de nó raiz *raiz*
-NO *inserir_no(NO *raiz, int chave) {
+static NO *inserir_no(NO *raiz, int chave) {
   if (raiz == NULL) {
     raiz = criar_no(chave); // se nó for nulo, criar novo no com a chave dada e
                             // inserir nessa posição
@@ -183,7 +183,7 @@ NO *max_esq(NO *raiz, NO *prev, NO *curr) {
 }
 
 // função para remover nó com certa chave de uma subárvore
-bool remover_no(NO **raiz, int chave) { // bool?
+static bool remover_no(NO **raiz, int chave) { // bool?
   if (*raiz == NULL) {
     return false;
   }
@@ -268,7 +268,7 @@ bool avl_remover(AVL *avl, int chave) {
 }
 
 // busca recursiva em subárvore por chave
-bool busca_no(NO *raiz, int chave) {
+static bool busca_no(NO *raiz, int chave) {
   if (raiz == NULL) {
     return false;
   }
@@ -320,7 +320,7 @@ void avl_imprimir_arvore(AVL *avl) {
 }
 
 // imprime nó em ordem
-void imprimir_no(NO *raiz) { // em ordem
+static void imprimir_no(NO *raiz) { // em ordem
   if (raiz == NULL) {
     return;
   }
@@ -341,7 +341,7 @@ void avl_imprimir(AVL *avl) {
 }
 
 // insere todo nó de uma subárvore dada, em uma outra AVL, em ordem
-void copy_no(NO *no, AVL *dest) {
+static void copy_no(NO *no, AVL *dest) {
   if (no == NULL) {
     return;
   }
@@ -362,7 +362,7 @@ void copy_avl(AVL *source, AVL *dest) {
 
 // insere todo nó de uma subárvore de raiz *no* em uma AVL dest, somente se a
 // mesma chave estiver presente em uma outra AVL comp, em ordem
-void intersect_no(NO *no, AVL *comp, AVL *dest) {
+static void intersect_no(NO *no, AVL *comp, AVL *dest) {
   if (no == NULL) {
     return;
   }
@@ -383,7 +383,7 @@ void intersect_avl(AVL *source, AVL *comp, AVL *dest) {
   intersect_no(source->raiz, comp, dest);
 }
 
-bool no_pertence(NO *raiz, int chave) {
+static bool no_pertence(NO *raiz, int chave) {
   if (raiz == NULL) {
     return false;
   }

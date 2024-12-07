@@ -1,5 +1,6 @@
 #include "set.h"
 #include "avl.h"
+#include "rbt.h"
 #include <stdlib.h>
 #define avl 0
 #define rubronegra 1
@@ -8,17 +9,19 @@
 // type
 struct set_ {
   void *tree;
-  int type;
+  bool type;
 };
 
 // cria e configura o set de acordo com input
-SET *set_criar(int type) {
+SET *set_criar(bool type) {
   SET *set = malloc(sizeof(SET));
 
   if (set != NULL) {
     set->type = type;
     if (type == avl)
       set->tree = avl_criar();
+    else
+      set->tree = rbt_criar();
   }
 
   return set;
@@ -32,7 +35,7 @@ bool set_inserir(SET *set, int chave) {
   if (set->type == avl)
     return avl_inserir(set->tree, chave);
   else
-    return false;
+    return rbt_inserir(set->tree, chave);
 }
 
 // remove chave do set
@@ -44,7 +47,7 @@ bool set_remover(SET *set, int chave) {
   if (set->type == avl)
     return avl_remover(set->tree, chave);
   else
-    return false;
+    return rbt_remover(set->tree, chave);
 }
 
 // imprime o set, por sinal em ordem
@@ -53,9 +56,10 @@ void set_imprimir(SET *set) {
     return;
   }
 
-  if (set->type == avl) {
+  if (set->type == avl)
     avl_imprimir(set->tree);
-  }
+  else
+    rbt_imprimir(set->tree);
 }
 
 bool set_pertence(SET *set, int chave) {
@@ -63,11 +67,10 @@ bool set_pertence(SET *set, int chave) {
     return false;
   }
 
-  if (set->type == avl) {
+  if (set->type == avl)
     return avl_pertence(set->tree, chave);
-  } else {
-    return false;
-  }
+  else
+    return rbt_pertence(set->tree, chave);
 }
 
 // retorna um set contendo a união dos elementos de set 1 e set 2
@@ -81,6 +84,9 @@ SET *set_uniao(SET *set1, SET *set2) {
   if (set1->type == avl && set2->type == avl) {
     copy_avl(set1->tree, uniao->tree);
     copy_avl(set2->tree, uniao->tree);
+  } else {
+    copy_rbt(set1->tree, uniao->tree);
+    copy_rbt(set2->tree, uniao->tree);
   }
 
   return uniao;
@@ -94,9 +100,10 @@ SET *set_interseccao(SET *set1, SET *set2) {
 
   SET *intersecao = set_criar(set1->type);
 
-  if (set1->type == avl) {
+  if (set1->type == avl)
     intersect_avl(set1->tree, set2->tree, intersecao->tree);
-  }
+  else
+    intersect_rbt(set1->tree, set2->tree, intersecao->tree);
 
   return intersecao;
 }

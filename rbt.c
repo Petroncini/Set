@@ -17,7 +17,7 @@ struct rbt_ {
 };
 
 // função para criar uma nova rbt, retorna nulo se malloc não funcionar
-RBT *rvt_criar(void) {
+RBT *rbt_criar(void) {
   RBT *rbt = malloc(sizeof(RBT));
 
   if (rbt != NULL) {
@@ -28,7 +28,7 @@ RBT *rvt_criar(void) {
 }
 
 // funcao para criar um no e inicializar os seus valores
-NO *criar_no(int chave) {
+static NO *criar_no(int chave) {
   NO *no = malloc(sizeof(NO));
 
   if (no != NULL) {
@@ -42,7 +42,7 @@ NO *criar_no(int chave) {
 }
 
 // funcao para recursivamente apagar os filhos de um nó, então ele mesmo
-void apagar_no(NO **no) {
+static void apagar_no(NO **no) {
   if (no != NULL) {
     apagar_no(&(*no)->esq);
     apagar_no(&(*no)->dir);
@@ -102,7 +102,7 @@ NO *ajeita(NO *no) {
   return no;
 }
 
-NO *inserir_no(NO *raiz, int chave) {
+static NO *inserir_no(NO *raiz, int chave) {
   if (raiz == NULL) return criar_no(chave);
 
   if (chave < raiz->chave)
@@ -161,7 +161,7 @@ NO *remover_min(NO *raiz) {
   return ajeita(raiz);
 }
 
-NO *remover_no(NO *raiz, int chave) {
+static NO *remover_no(NO *raiz, int chave) {
   if (raiz == NULL) return NULL;
 
   if (chave < raiz->chave) {
@@ -228,34 +228,89 @@ bool rbt_busca(RBT *rbt, int chave) {
   return busca_no(rbt->raiz, chave);
 }
 
-// imprime a árvore bonitinho
-void printSpaces(int count) {
-    for (int i = 0; i < count; i++) {
-        printf(" ");
-    }
-}
-
-void imprimir_no(NO *raiz, int nivel) {
+// imprime nó em ordem
+static void imprimir_no(NO *raiz) { // em ordem
   if (raiz == NULL) {
-    printSpaces(nivel * 4); // 4 espaços por nível
-    printf("NULL\n");
     return;
   }
 
-  // Imprimir o nó atual com sua cor
-  printSpaces(nivel * 4);
-  printf("%d (%s)\n", raiz->chave, raiz->cor ? "R" : "B");
-
-  // Imprimir subárvores esquerda e direita
-  imprimir_no(raiz->esq, nivel + 1);
-  imprimir_no(raiz->dir, nivel + 1);
+  imprimir_no(raiz->esq);
+  printf("%i ", raiz->chave);
+  imprimir_no(raiz->dir);
 }
 
+// imprime o nó raiz e seus filhos
 void rbt_imprimir(RBT *rbt) {
   if (rbt == NULL) {
-    printf("Árvore inexistente!\n");
     return;
   }
 
-  imprimir_no(rbt->raiz, 0);
+  imprimir_no(rbt->raiz);
+  printf("\n");
+}
+
+static void copy_no(NO *no, RBT *dest) {
+  if (no == NULL) {
+    return;
+  }
+
+  copy_no(no->esq, dest);
+  rbt_inserir(dest, no->chave);
+  copy_no(no->dir, dest);
+}
+
+// insere todos os nós de uma RBT source, em uma outra RBT dest
+void copy_rbt(RBT *source, RBT *dest) {
+  if (source == NULL || dest == NULL) {
+    return;
+  }
+
+  copy_no(source->raiz, dest);
+}
+
+// insere todo nó de uma subárvore de raiz *no* em uma RBT dest, somente se a
+// mesma chave estiver presente em uma outra RBT comp, em ordem
+static void intersect_no(NO *no, RBT *comp, RBT *dest) {
+  if (no == NULL) {
+    return;
+  }
+
+  intersect_no(no->esq, comp, dest);
+  if (rbt_busca(comp, no->chave)) {
+    rbt_inserir(dest, no->chave);
+  }
+  intersect_no(no->dir, comp, dest);
+}
+
+// insere todos os nós presentes tanto na RBT source e comp em uma RBT dest
+void intersect_rbt(RBT *source, RBT *comp, RBT *dest) {
+  if (source == NULL || comp == NULL || dest == NULL) {
+    return;
+  }
+
+  intersect_no(source->raiz, comp, dest);
+}
+
+static bool no_pertence(NO *raiz, int chave) {
+  if (raiz == NULL) {
+    return false;
+  }
+
+  if (chave == raiz->chave) {
+    return true;
+  }
+
+  if (chave < raiz->chave) {
+    return no_pertence(raiz->esq, chave);
+  } else {
+    return no_pertence(raiz->dir, chave);
+  }
+}
+
+bool rbt_pertence(RBT *rbt, int chave) {
+  if (rbt == NULL) {
+    return NULL;
+  }
+
+  return no_pertence(rbt->raiz, chave);
 }

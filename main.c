@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
     set_inserir(B, x);
   }
 
-  printf("\nOperações:\n1: Buscar\n2: União\n3: Intersecção\n4: "
+  printf("\nOperações:\n1: Pertence\n2: União\n3: Intersecção\n4: "
          "Remoção\n5: Inserir\n6: Sair\n\n");
 
   while (true) {
@@ -77,7 +77,6 @@ int main(int argc, char *argv[]) {
       set_remover(A, elemento);
       printf("Set sem \"%d\": ", elemento);
       set_imprimir(A);
-
       break;
     }
 
@@ -88,9 +87,10 @@ int main(int argc, char *argv[]) {
       scanf("%d", &elemento);
       printf("Set com \"%d\": ", elemento);
       set_inserir(A, elemento);
+      break;
     }
 
-    case 6: {
+    default: {
       return 0;
       break;
     }

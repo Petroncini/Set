@@ -11,4 +11,5 @@ bool rbt_busca(RBT *rbt, int chave);
 void rbt_imprimir(RBT *rbt);
 void copy_rbt(RBT *source, RBT *dest);
 void intersect_rbt(RBT *source, RBT *comp, RBT *dest);
+bool rbt_pertence(RBT *rbt, int chave);
 #endif
