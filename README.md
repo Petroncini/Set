@@ -2,16 +2,16 @@
 
 O TAD Set foi construído a partir de dois TADs que servem de base para as operações de:
 
-    Pertencimento
-    União
-    Interseção
-    Remoção
-    Inserção
+- Pertencimento
+- União
+- Interseção
+- Remoção
+- Inserção
 
 O Set é apenas uma camada que empacota as operações implementadas nos TADs AVL (Árvore Adelson-Velsky and Landis) e RBT (Árvore Left-Leaning Red-Black). Essas duas estruturas de dados estão disponíveis para o usuário do TAD Set. A estrutura escolhida é determinada pelo parâmetro tipo passado como argumento na função de criação do Set:
 
-    0 indica AVL
-    1 indica LLRB
+- 0 indica AVL
+- 1 indica LLRB
 
 As vantagens e desvantagens dessas estruturas em relação ao seu uso como base para o conjunto são discutidas a seguir:
 
@@ -39,9 +39,9 @@ $O(1,44⋅log⁡n)$
 
 A remoção na árvore AVL começa pela localização do nó a ser removido, com custo $O(1,44 \cdot \log{n})$. Após encontrar o nó, existem três casos a serem tratados:
 
-    Nó folha: basta removê-lo diretamente.
-    Nó com 1 filho: o filho substitui o pai.
-    Nó com 2 filhos: é necessário encontrar o maior nó da subárvore esquerda, substituir o nó a ser removido por este maior nó e, então, removê-lo (essa remoção cairá em um dos dois casos anteriores).
+- Nó folha: basta removê-lo diretamente.
+- Nó com 1 filho: o filho substitui o pai.
+- Nó com 2 filhos: é necessário encontrar o maior nó da subárvore esquerda, substituir o nó a ser removido por este maior nó e, então, removê-lo (essa remoção cairá em um dos dois casos anteriores).
 
 No pior caso, percorremos a altura inteira da árvore ($1,44 \cdot \log{n}$) e realizamos até uma rotação por nível da árvore. Assim, o custo total da operação de remoção no pior caso é:
 $O(1,44⋅log⁡n)+O(1,44⋅log⁡n)=O(2,88⋅log⁡n)$
@@ -62,5 +62,5 @@ $O(n⋅1,44⋅log⁡n⋅1,44⋅log⁡m)$
 
 ## Referências
 
-    CMU: AVL Trees
-    Arxiv: AVL Tree Analysis
+- CMU: AVL Trees
+- Arxiv: AVL Tree Analysis
