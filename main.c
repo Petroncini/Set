@@ -45,6 +45,7 @@ int main(void) {
     // união
     SET *uniao = set_uniao(A, B);
     set_imprimir(uniao);
+    set_apagar(&uniao);
     break;
   }
 
@@ -52,6 +53,7 @@ int main(void) {
     // intersecção
     SET *interseccao = set_interseccao(A, B);
     set_imprimir(interseccao);
+    set_apagar(&interseccao);
     break;
   }
 
