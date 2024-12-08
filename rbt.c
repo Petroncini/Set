@@ -342,26 +342,3 @@ void intersect_rbt(RBT *source, RBT *comp, RBT *dest) {
   intersect_no(source->raiz, comp, dest);
 }
 
-static bool no_pertence(NO *raiz, int chave) {
-  if (raiz == NULL) {
-    return false;
-  }
-
-  if (chave == raiz->chave) {
-    return true;
-  }
-
-  if (chave < raiz->chave) {
-    return no_pertence(raiz->esq, chave);
-  } else {
-    return no_pertence(raiz->dir, chave);
-  }
-}
-
-bool rbt_pertence(RBT *rbt, int chave) {
-  if (rbt == NULL) {
-    return NULL;
-  }
-
-  return no_pertence(rbt->raiz, chave);
-}

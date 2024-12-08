@@ -69,9 +69,9 @@ bool set_pertence(SET *set, int chave) {
   }
 
   if (set->type == avl)
-    return avl_pertence(set->tree, chave);
+    return avl_busca(set->tree, chave);
   else
-    return rbt_pertence(set->tree, chave);
+    return rbt_busca(set->tree, chave);
 }
 
 // retorna um set contendo a união dos elementos de set 1 e set 2
