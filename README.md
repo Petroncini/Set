@@ -79,7 +79,7 @@ Etapas principais:
 4. No máximo duas rotações por inserção
 5. Recálculo das cores dos nós no caminho de inserção
 
-Desse modo, precisamos fazer uma busca e depois as devidos ajustes. Como podemos ter que fazer até uma Rotação ($O(1)$) e uma Inversão ($O(1)$) por nível ($O(2⋅\log{n})$), o custo total de inserção será:
+Desse modo, precisamos fazer uma busca e depois as devidos ajustes. Como podemos ter que fazer até uma Rotação $O(1)$ e uma Inversão $O(1)$ por nível $O(2⋅\log{n})$, o custo total de inserção será:
 $O(6⋅\log{n})$
 
 ### Remoção
