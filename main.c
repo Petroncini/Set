@@ -91,6 +91,8 @@ int main() {
     }
 
     default: {
+      set_apagar(&A);
+      set_apagar(&B);
       return 0;
       break;
     }

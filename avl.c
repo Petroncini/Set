@@ -44,8 +44,11 @@ static NO *criar_no(int chave) {
 // funcao para recursivamente apagar os filhos de um nó, então ele mesmo
 static void apagar_no(NO **no) {
   if (no != NULL) {
-    apagar_no(&(*no)->esq);
-    apagar_no(&(*no)->dir);
+    if ((*no)->esq != NULL)
+      apagar_no(&(*no)->esq);
+    if ((*no)->dir != NULL)
+      apagar_no(&(*no)->dir);
+
     free(*no);
     *no = NULL;
   }
@@ -53,7 +56,8 @@ static void apagar_no(NO **no) {
 
 // funcao para apagar a avl, inteira usando a funcao apagar_no na raiz
 void avl_apagar(AVL **avl) {
-  apagar_no(&(*avl)->raiz);
+  if ((*avl)->raiz != NULL)
+    apagar_no(&(*avl)->raiz);
   free(*avl);
   *avl = NULL;
 }

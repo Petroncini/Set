@@ -1,6 +1,7 @@
 #include "set.h"
 #include "avl.h"
 #include "rbt.h"
+#include <stdio.h>
 #include <stdlib.h>
 #define avl 0
 #define rubronegra 1
@@ -106,4 +107,19 @@ SET *set_interseccao(SET *set1, SET *set2) {
     intersect_rbt(set1->tree, set2->tree, intersecao->tree);
 
   return intersecao;
+}
+
+void set_apagar(SET **set) {
+  if (set == NULL || *set == NULL) {
+    return;
+  }
+
+  if ((*set)->type == 0) {
+    avl_apagar((AVL **)&(*set)->tree);
+  } else {
+    rbt_apagar((RBT **)&(*set)->tree);
+  }
+
+  free(*set);
+  *set = NULL;
 }
