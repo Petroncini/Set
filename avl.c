@@ -174,12 +174,12 @@ bool avl_inserir(AVL *avl, int chave) {
 
 // encontra maior nó em uma sub-árvore, mais pra frente é utilizado para achar o
 // máximo na esquerda de um certo nó
-NO *max_esq(NO *raiz, NO *prev, NO *curr) {
-  if (curr->dir != NULL) {
-    max_esq(raiz, curr, curr->dir);
+NO *max_esq(NO *raiz) {
+  if (raiz->dir != NULL) {
+    return max_esq(raiz->dir);
   }
 
-  return curr;
+  return raiz;
 }
 
 // função para remover nó com certa chave de uma subárvore
@@ -203,9 +203,8 @@ static NO *remover_no(NO **raiz, int chave) { // bool?
       free(p); // apagar nó removido
       p = NULL;
 
-    } else { // se o nó tiver dois filhos
-      NO *temp =
-          max_esq(*raiz, *raiz, (*raiz)->esq); // procura o maior nó na esquerda
+    } else {                            // se o nó tiver dois filhos
+      NO *temp = max_esq((*raiz)->esq); // procura o maior nó na esquerda
 
       (*raiz)->chave =
           temp->chave; // troque a chave da raiz para a chave desse maior nó
