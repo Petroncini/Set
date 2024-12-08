@@ -63,4 +63,4 @@ $O(n⋅1,44⋅log⁡n⋅1,44⋅log⁡m)$
 ## Referências
 
 - CMU: AVL Trees: https://www.cs.cmu.edu/~rjsimmon/15122-s13/rec/19.pdf
-- Arxiv: AVL Tree Analysis https://arxiv.org/abs/1506.03528
+- Arxiv: Amortized rotation cost in AVL trees https://arxiv.org/abs/1506.03528
