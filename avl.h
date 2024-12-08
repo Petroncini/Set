@@ -12,5 +12,5 @@ void avl_imprimir(AVL *avl);
 void copy_avl(AVL *source, AVL *dest);
 void intersect_avl(AVL *source, AVL *comp, AVL *dest);
 void avl_imprimir_arvore(AVL *avl);
-bool avl_pertence(AVL *avl, int chave);
+
 #endif
