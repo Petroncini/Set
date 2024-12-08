@@ -60,8 +60,64 @@ A interseção é realizada percorrendo todos os nós de uma árvore $A$ e verif
 Se $A$ tem tamanho $n$, $B$ tem tamanho $m$, e assumimos que $B$ contém $A$, o custo da interseção será:
 $O(n⋅1,44⋅log⁡n⋅1,44⋅log⁡m)$
 
+## Árvore Rubro-Negra Inclinada para a Esquerda (Left-Leaning Red-Black Tree)
+A árvore rubro-negra inclinada para a esquerda (LLRB) é uma variante da árvore rubro-negra tradicional que simplifica o processo de balanceamento e manutenção da estrutura da árvore. Desenvolvida por Robert Sedgewick, esta estrutura de dados mantém propriedades que garantem um balanceamento eficiente e operações com complexidade logarítmica.
+
+Essa árvore possui algumas propriedades importantes: todos os nós vermelhos são inclinados para a esquerda, não existem nós vermelhos conectados com nós vermelhos, todos os caminhos da raiz para folhas tem o mesmo número de nós pretos e a altura máxima da árvore é $2⋅\log{(n)}$.
+
+### Busca
+A operação de busca em uma LLRB segue o mesmo princípio de uma árvore de busca binária padrão, com a garantia de balanceamento. Assim, de acordo com a altura máxima, a busca terá custo:
+$O(2⋅\log{n})$
+
+### Inserção
+A inserção na LLRB é mais complexa devido às regras de manutenção da cor dos nós e do balanceamento.
+
+Etapas principais:
+1. Inserção inicial como em uma árvore de busca binária
+2. Coloração do novo nó como vermelho
+3. Rebalanceamento através de rotações e recoloração
+4. No máximo duas rotações por inserção
+5. Recálculo das cores dos nós no caminho de inserção
+
+Desse modo, precisamos fazer uma busca e depois as devidos ajustes. Como podemos ter que fazer até uma Rotação ($O(1)$) e uma Inversão ($O(1)$) por nível ($O(2⋅\log{n})$), o custo total de inserção será:
+$O(6⋅\log{n})$
+
+### Remoção
+A remoção na LLRB mantém as propriedades de balanceamento com mecanismos específicos de reequilíbrio.
+
+Estratégias de remoção:
+- Remoção de nó folha
+- Remoção de nó com um filho
+- Remoção de nó com dois filhos (substituição pelo predecessor)
+- Rebalanceamento após remoção
+- Ajuste de cores para manter as propriedades da árvore
+
+Deste modo, precisamos buscar o nó a ser removido, depois ajustar para manter as propriedades. Agora temos 3 ajustes que podem ocorrer em cada nível, além da substituição interna se o nó à ser removido não for uma folha que tem complexidade de aproximadamente $O(\log{n})$. Desse modo, a complexidade total fica:
+$O(9⋅\log{n})$
+
+### União
+A operação de união pode ser implementada percorrendo uma árvore e inserindo seus elementos em outra.
+
+O cálculo da complexidade será semelhante com o da AVL, sendo $n$ o tamanho da primeira árvore e $m$ o custo da segunda, fica:
+$O(2⋅(nlogn + mlogm))$
+
+### Interseção
+A interseção realiza uma busca em uma segunda árvore para cada elemento da primeira.
+
+Também, semelhante à AVL, o custo será:
+$O(n⋅2⋅log⁡n⋅2⋅log⁡m)$
+
+### Comparação com AVL
+Diferenças principais em relação à árvore AVL:
+- Implementação mais simples
+- Menos rotações durante inserção/remoção
+- Tolerância a um nível adicional de desbalanceamento
+- Menor sobrecarga de armazenamento (não requer altura explícita)
+
 ## Referências
 
 - CMU: AVL Trees: https://www.cs.cmu.edu/~rjsimmon/15122-s13/rec/19.pdf
 - Arxiv:
   - Amortized rotation cost in AVL trees https://arxiv.org/abs/1506.03528
+- Robert Sedgewick: Left-leaning Red-Black Trees: https://sedgewick.io/wp-content/themes/sedgewick/papers/2008LLRB.pdf
+- Robert Sedgewick: https://pdfs.semanticscholar.org/80d8/531ce3c7ad5dbf18e659addb71ed3539f395.pdf
