@@ -2,11 +2,11 @@
 
 O TAD Set foi construído a partir de dois TADs que servem de base para as operações de:
 
-    Pertencimento
-    União
-    Interseção
-    Remoção
-    Inserção
+    - Pertencimento
+    - União
+    - Interseção
+    - Remoção
+    - Inserção
 
 O Set é apenas uma camada que empacota as operações implementadas nos TADs AVL (Árvore Adelson-Velsky and Landis) e RBT (Árvore Left-Leaning Red-Black). Essas duas estruturas de dados estão disponíveis para o usuário do TAD Set. A estrutura escolhida é determinada pelo parâmetro tipo passado como argumento na função de criação do Set:
 
