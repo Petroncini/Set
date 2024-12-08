@@ -44,8 +44,11 @@ static NO *criar_no(int chave) {
 // funcao para recursivamente apagar os filhos de um nó, então ele mesmo
 static void apagar_no(NO **no) {
   if (no != NULL) {
-    apagar_no(&(*no)->esq);
-    apagar_no(&(*no)->dir);
+    if ((*no)->esq != NULL)
+      apagar_no(&(*no)->esq);
+    if ((*no)->dir != NULL)
+      apagar_no(&(*no)->dir);
+
     free(*no);
     *no = NULL;
   }
@@ -53,7 +56,8 @@ static void apagar_no(NO **no) {
 
 // funcao para apagar a rbt, inteira usando a funcao apagar_no na raiz
 void rbt_apagar(RBT **rbt) {
-  apagar_no(&(*rbt)->raiz);
+  if ((*rbt)->raiz != NULL)
+    apagar_no(&(*rbt)->raiz);
   free(*rbt);
   *rbt = NULL;
 }
@@ -93,20 +97,25 @@ void inverte(NO *no) {
 
 // checar se um nó é vermelho
 bool eh_vermelho(NO *no) {
-  if (no == NULL) return false;
+  if (no == NULL)
+    return false;
   return (no->cor == 1);
 }
 
 // corrigir eventuais violações das propriedades da llrb
 NO *ajeita(NO *no) {
-  if (eh_vermelho(no->dir) && !eh_vermelho(no->esq)) no = rbt_rot_esq(no);
-  if (eh_vermelho(no->esq) && eh_vermelho(no->esq->esq)) no = rbt_rot_dir(no);
-  if (eh_vermelho(no->esq) && eh_vermelho(no->dir)) inverte(no);
+  if (eh_vermelho(no->dir) && !eh_vermelho(no->esq))
+    no = rbt_rot_esq(no);
+  if (eh_vermelho(no->esq) && eh_vermelho(no->esq->esq))
+    no = rbt_rot_dir(no);
+  if (eh_vermelho(no->esq) && eh_vermelho(no->dir))
+    inverte(no);
   return no;
 }
 
 static NO *inserir_no(NO *raiz, int chave) {
-  if (raiz == NULL) return criar_no(chave);
+  if (raiz == NULL)
+    return criar_no(chave);
 
   if (chave < raiz->chave) // se a chave é menor, vai pra esquerda
     raiz->esq = inserir_no(raiz->esq, chave);
@@ -136,7 +145,7 @@ NO *move_vermelho_esq(NO *no) {
     inverte(no);
   }
   return no;
-} 
+}
 
 // função de balanceamento para a direita
 NO *move_vermelho_dir(NO *no) {
@@ -149,8 +158,9 @@ NO *move_vermelho_dir(NO *no) {
 }
 
 // retorna o valor mínimo da árvore
-NO *min(NO* raiz) {
-  while (raiz->esq) raiz = raiz->esq;
+NO *min(NO *raiz) {
+  while (raiz->esq)
+    raiz = raiz->esq;
   return raiz;
 }
 
@@ -170,25 +180,29 @@ NO *remover_min(NO *raiz) {
 }
 
 static NO *remover_no(NO *raiz, int chave) {
-  if (raiz == NULL) return NULL;
+  if (raiz == NULL)
+    return NULL;
 
-  if (chave < raiz->chave) { // se a chave é menor, balanceia e chama para a esquerda
+  if (chave <
+      raiz->chave) { // se a chave é menor, balanceia e chama para a esquerda
     if (!eh_vermelho(raiz->esq) && !eh_vermelho(raiz->esq->esq)) {
       raiz = move_vermelho_esq(raiz);
     }
     raiz->esq = remover_no(raiz->esq, chave);
-  } else { // se não
+  } else {                        // se não
     if (eh_vermelho(raiz->esq)) { // balanceia
       raiz = rbt_rot_dir(raiz);
     }
-    if (chave == raiz->chave && raiz->dir == NULL) { // se achou a chave correta, remove
+    if (chave == raiz->chave &&
+        raiz->dir == NULL) { // se achou a chave correta, remove
       free(raiz);
       return NULL;
     }
     if (!eh_vermelho(raiz->dir) && !eh_vermelho(raiz->dir->esq)) { // balanceia
       raiz = move_vermelho_dir(raiz);
     }
-    if (chave == raiz->chave) { // se achou a chave mas não é folha, realiza a troca com folha
+    if (chave == raiz->chave) { // se achou a chave mas não é folha, realiza a
+                                // troca com folha
       NO *x = min(raiz->dir);
       raiz->chave = x->chave;
       raiz->dir = remover_min(raiz->dir);
@@ -201,13 +215,16 @@ static NO *remover_no(NO *raiz, int chave) {
 
 // remover nó de uma RBT por chave
 bool rbt_remover(RBT *rbt, int chave) {
-    if (rbt == NULL) return false;
-    
-    if (!rbt_busca(rbt, chave)) return false;
-    
-    rbt->raiz = remover_no(rbt->raiz, chave);
-    if (rbt->raiz) rbt->raiz->cor = 0;
-    return true;
+  if (rbt == NULL)
+    return false;
+
+  if (!rbt_busca(rbt, chave))
+    return false;
+
+  rbt->raiz = remover_no(rbt->raiz, chave);
+  if (rbt->raiz)
+    rbt->raiz->cor = 0;
+  return true;
 }
 
 // busca recursiva em subárvore por chave

@@ -1,7 +1,7 @@
 #include "set.h"
 #include <stdio.h>
 
-int main() {
+int main(void) {
   SET *A, *B;
   int n_a, n_b, x;
   int op;
