@@ -82,6 +82,7 @@ NO *rbt_rot_esq(NO *A) {
   return B;
 }
 
+// inverter cores de um nó e seus filhos
 void inverte(NO *no) {
   no->cor = !no->cor;
   if (no->esq)
@@ -90,11 +91,13 @@ void inverte(NO *no) {
     no->dir->cor = !no->dir->cor;
 }
 
+// checar se um nó é vermelho
 bool eh_vermelho(NO *no) {
   if (no == NULL) return false;
   return (no->cor == 1);
 }
 
+// corrigir eventuais violações das propriedades da llrb
 NO *ajeita(NO *no) {
   if (eh_vermelho(no->dir) && !eh_vermelho(no->esq)) no = rbt_rot_esq(no);
   if (eh_vermelho(no->esq) && eh_vermelho(no->esq->esq)) no = rbt_rot_dir(no);
@@ -105,24 +108,26 @@ NO *ajeita(NO *no) {
 static NO *inserir_no(NO *raiz, int chave) {
   if (raiz == NULL) return criar_no(chave);
 
-  if (chave < raiz->chave)
+  if (chave < raiz->chave) // se a chave é menor, vai pra esquerda
     raiz->esq = inserir_no(raiz->esq, chave);
-  else if (chave > raiz->chave)
+  else if (chave > raiz->chave) // se a chave é maior, vai pra direita
     raiz->dir = inserir_no(raiz->dir, chave);
 
-  return ajeita(raiz);
+  return ajeita(raiz); // ajeita o nó
 }
 
+// inserir nó em uma llrb
 bool rbt_inserir(RBT *rbt, int chave) {
   if (rbt == NULL) {
     return false;
   }
 
   rbt->raiz = inserir_no(rbt->raiz, chave);
-  rbt->raiz->cor = 0;
+  rbt->raiz->cor = 0; // seta a cor da raiz como preto
   return true;
 }
 
+// função de balanceamento para a esquerda
 NO *move_vermelho_esq(NO *no) {
   inverte(no);
   if (eh_vermelho(no->dir->esq)) {
@@ -133,6 +138,7 @@ NO *move_vermelho_esq(NO *no) {
   return no;
 } 
 
+// função de balanceamento para a direita
 NO *move_vermelho_dir(NO *no) {
   inverte(no);
   if (eh_vermelho(no->esq->esq)) {
@@ -142,11 +148,13 @@ NO *move_vermelho_dir(NO *no) {
   return no;
 }
 
+// retorna o valor mínimo da árvore
 NO *min(NO* raiz) {
   while (raiz->esq) raiz = raiz->esq;
   return raiz;
 }
 
+// remove o valor mínimo da árvore
 NO *remover_min(NO *raiz) {
   if (raiz->esq == NULL) {
     free(raiz);
@@ -164,33 +172,34 @@ NO *remover_min(NO *raiz) {
 static NO *remover_no(NO *raiz, int chave) {
   if (raiz == NULL) return NULL;
 
-  if (chave < raiz->chave) {
+  if (chave < raiz->chave) { // se a chave é menor, balanceia e chama para a esquerda
     if (!eh_vermelho(raiz->esq) && !eh_vermelho(raiz->esq->esq)) {
       raiz = move_vermelho_esq(raiz);
     }
     raiz->esq = remover_no(raiz->esq, chave);
-  } else {
-    if (eh_vermelho(raiz->esq)) {
+  } else { // se não
+    if (eh_vermelho(raiz->esq)) { // balanceia
       raiz = rbt_rot_dir(raiz);
     }
-    if (chave == raiz->chave && raiz->dir == NULL) {
+    if (chave == raiz->chave && raiz->dir == NULL) { // se achou a chave correta, remove
       free(raiz);
       return NULL;
     }
-    if (!eh_vermelho(raiz->dir) && !eh_vermelho(raiz->dir->esq)) {
+    if (!eh_vermelho(raiz->dir) && !eh_vermelho(raiz->dir->esq)) { // balanceia
       raiz = move_vermelho_dir(raiz);
     }
-    if (chave == raiz->chave) {
+    if (chave == raiz->chave) { // se achou a chave mas não é folha, realiza a troca com folha
       NO *x = min(raiz->dir);
       raiz->chave = x->chave;
       raiz->dir = remover_min(raiz->dir);
-    } else {
+    } else { // se não achou a chave, chama para a direita
       raiz->dir = remover_no(raiz->dir, chave);
     }
   }
-  return ajeita(raiz);
+  return ajeita(raiz); // ajeitar o nó
 }
 
+// remover nó de uma RBT por chave
 bool rbt_remover(RBT *rbt, int chave) {
     if (rbt == NULL) return false;
     
@@ -252,7 +261,6 @@ void rbt_imprimir_arvore(RBT *rbt) {
 
   imprimir_subarvore(rbt->raiz, 0);
 }
-
 
 // imprime nó em ordem
 static void imprimir_no(NO *raiz) { // em ordem
