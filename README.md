@@ -44,14 +44,14 @@ A remoção na árvore AVL começa pela localização do nó a ser removido, com
 - Nó com 2 filhos: é necessário encontrar o maior nó da subárvore esquerda, substituir o nó a ser removido por este maior nó e, então, removê-lo (essa remoção cairá em um dos dois casos anteriores).
 
 No pior caso, percorremos a altura inteira da árvore ($1,44 \cdot \log{n}$) e realizamos até uma rotação por nível da árvore. Assim, o custo total da operação de remoção no pior caso é:
-$O(1,44⋅log⁡n (busca) + 1,44⋅log⁡n (atualizzação de altura) + 1,44⋅logn(rotações))=O(4,32⋅log⁡n)$
+$O(1,44⋅log⁡n (busca) + 1,44⋅log⁡n (atualização de altura) + 1,44⋅logn(rotações))=O(4,32⋅log⁡n)$
 
 ### União
 
 A operação de união é implementada por meio da cópia de árvores. A função percorre uma árvore inteira e insere cada elemento em uma árvore destino (não são permitidos elementos duplicados).
 
 Para uma árvore de tamanho $n$, a cópia tem custo $O(1,44 \cdot n \log{n})$. Se a segunda árvore a ser unida tem tamanho $m$, o custo total da operação de união é:
-$O(n(2,88⋅log⁡n)(percorrer A e inserir e inserção)+m(2,88⋅log⁡m)(percorrer B e inserir e inserção)) = O(2,88(nlogn + mlogm))$
+$O(n(2,88⋅log⁡n)(percorrer A e inserir)+m(2,88⋅log⁡m)(percorrer B e inserir)) = O(2,88(nlogn + mlogm))$
 
 ### Interseção
 
