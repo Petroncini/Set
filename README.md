@@ -99,13 +99,13 @@ $O(9⋅\log{n})$
 A operação de união pode ser implementada percorrendo uma árvore e inserindo seus elementos em outra.
 
 O cálculo da complexidade será semelhante com o da AVL, sendo $n$ o tamanho da primeira árvore e $m$ o custo da segunda, fica:
-$O(2⋅(nlogn + mlogm))$
+$O(4⋅(nlogn + mlogm))$
 
 ### Interseção
 A interseção realiza uma busca em uma segunda árvore para cada elemento da primeira.
 
 Também, semelhante à AVL, o custo será:
-$O(n⋅2⋅log⁡n⋅2⋅log⁡m)$
+$O(n⋅2⋅log⁡m⋅4⋅logn) = O(6⋅nlogn⋅logm)$
 
 ### Comparação com AVL
 Diferenças principais em relação à árvore AVL:
@@ -119,5 +119,6 @@ Diferenças principais em relação à árvore AVL:
 - CMU: AVL Trees: https://www.cs.cmu.edu/~rjsimmon/15122-s13/rec/19.pdf
 - Arxiv:
   - Amortized rotation cost in AVL trees https://arxiv.org/abs/1506.03528
-- Robert Sedgewick: Left-leaning Red-Black Trees: https://sedgewick.io/wp-content/themes/sedgewick/papers/2008LLRB.pdf
-- Robert Sedgewick: https://pdfs.semanticscholar.org/80d8/531ce3c7ad5dbf18e659addb71ed3539f395.pdf
+- Robert Sedgewick:
+  - Left-leaning Red-Black Trees: https://sedgewick.io/wp-content/themes/sedgewick/papers/2008LLRB.pdf
+  - https://pdfs.semanticscholar.org/80d8/531ce3c7ad5dbf18e659addb71ed3539f395.pdf
