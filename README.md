@@ -116,7 +116,7 @@ Diferenças principais em relação à árvore AVL:
 
 
 ### Nota
-Tentamos análisar a literatura existente para encontrar o número de rotações feito da inserção e remoção da LLRBT, mas aparentemente isso é um tanto complicado. Embora na Red Black normal o número de rotações seja constante, na Left-leaning o número de rotação na remoção tem um fator logn (proporcional a altura da árvore). Mas não encontramos muito material discutindo isso, exceto [5]. Mas no final a complexidade assintótica acaba sendo a mesma.
+Tentamos análisar a literatura existente para encontrar o número de rotações feito da inserção e remoção da LLRBT, mas aparentemente isso é um tanto complicado. Embora na Red Black normal o número de rotações seja constante, na Left-leaning o número de rotação na remoção parece tem um fator logn (proporcional a altura da árvore). Mas não encontramos muito material discutindo isso, exceto [5]. No final, a complexidade assintótica acaba sendo a mesma.
 
 ## Referências
 
