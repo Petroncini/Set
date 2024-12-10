@@ -50,7 +50,7 @@ $O(1,44⋅logn (busca) + 1,44⋅logn (atualização de altura) + 1,44⋅logn(rot
 
 A operação de união é implementada por meio da cópia de árvores. A função percorre uma árvore inteira e insere cada elemento em uma árvore destino (não são permitidos elementos duplicados).
 
-Para uma árvore de tamanho $n$, a cópia tem custo $O(1,44 \cdot n \log{n})$. Se a segunda árvore a ser unida tem tamanho $m$, o custo total da operação de união é:
+Para uma árvore de tamanho $n$, a cópia tem custo $O(2,88 \cdot n \log{n})$. Se a segunda árvore a ser unida tem tamanho $m$, o custo total da operação de união é:
 $O(n(2,88⋅logn)(percorrer A e inserir)+m(2,88⋅logm)(percorrer B e inserir)) = O(2,88(nlogn + mlogm))$
 
 ### Interseção
@@ -99,13 +99,13 @@ $O(9⋅\log{n})$
 A operação de união pode ser implementada percorrendo uma árvore e inserindo seus elementos em outra.
 
 O cálculo da complexidade será semelhante com o da AVL, sendo $n$ o tamanho da primeira árvore e $m$ o custo da segunda, fica:
-$O(4⋅(nlogn + mlogm))$
+$O(6⋅(nlogn + mlogm))$
 
 ### Interseção
 A interseção realiza uma busca em uma segunda árvore para cada elemento da primeira.
 
 Também, semelhante à AVL, o custo será:
-$O(n⋅2⋅log⁡m⋅4⋅logn) = O(6⋅nlogn⋅logm)$
+$O(n⋅2⋅log⁡m⋅6⋅logn) = O(12⋅nlogn⋅logm)$
 
 ### Comparação com AVL
 Diferenças principais em relação à árvore AVL:
