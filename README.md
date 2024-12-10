@@ -91,7 +91,7 @@ Estratégias de remoção:
 - Ajuste de cores para manter as propriedades da árvore
 
 Deste modo, precisamos buscar o nó a ser removido, depois ajustar para manter as propriedades. Agora temos até 2 ajustes que podem ocorrer em cada nível, além da substituição interna se o nó a ser removido não for uma folha que tem complexidade de aproximadamente $O(\log{n})$. Desse modo, a complexidade total fica:
-$O(2⋅\log{n}(busca) + 2*2\log{n}(transformações)) = O(6⋅\log{n})$
+$O(2⋅\log{n}(busca) + 2\log{n}(transformações)) = O(4⋅\log{n})$
 
 ### União
 A operação de união pode ser implementada percorrendo uma árvore e inserindo seus elementos em outra.
