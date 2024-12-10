@@ -189,7 +189,7 @@ NO *max_esq(NO *raiz) {
 // função para remover nó com certa chave de uma subárvore
 static NO *remover_no(NO **raiz, int chave) { // bool?
   if (*raiz == NULL) {
-    return false;
+    return NULL;
   }
 
   if (chave == (*raiz)->chave) { // se encontrar a chave, remova
