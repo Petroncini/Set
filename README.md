@@ -114,12 +114,16 @@ Diferenças principais em relação à árvore AVL:
 - Tolerância a um nível adicional de desbalanceamento
 - Menor sobrecarga de armazenamento (não requer altura explícita)
 
+
+### Nota
+Tentamos análisar a literatura existente para encontrar o número de rotações feito da inserção e remoção da LLRBT, mas aparentemente isso é um tanto complicado. Embora na Red Black normal o número de rotações seja constante, na Left-leaning o número de rotação na remoção tem um fator logn (proporcional a altura da árvore). Mas não encontramos muito material discutindo isso, exceto [5]. Mas no final a complexidade assintótica acaba sendo a mesma.
+
 ## Referências
 
-- CMU: AVL Trees: https://www.cs.cmu.edu/~rjsimmon/15122-s13/rec/19.pdf
+- [1] CMU: AVL Trees: https://www.cs.cmu.edu/~rjsimmon/15122-s13/rec/19.pdf
 - Arxiv:
-  - Amortized rotation cost in AVL trees https://arxiv.org/abs/1506.03528
+  - [2] Amortized rotation cost in AVL trees https://arxiv.org/abs/1506.03528
 - Robert Sedgewick:
-  - Left-leaning Red-Black Trees: https://sedgewick.io/wp-content/themes/sedgewick/papers/2008LLRB.pdf
-  - https://pdfs.semanticscholar.org/80d8/531ce3c7ad5dbf18e659addb71ed3539f395.pdf
-- Eddie Kohler (Harvard): https://read.seas.harvard.edu/~kohler/notes/llrb.html
+  - [3] Left-leaning Red-Black Trees: https://sedgewick.io/wp-content/themes/sedgewick/papers/2008LLRB.pdf
+  - [4] https://pdfs.semanticscholar.org/80d8/531ce3c7ad5dbf18e659addb71ed3539f395.pdf
+- [5] Eddie Kohler (Harvard): https://read.seas.harvard.edu/~kohler/notes/llrb.html
