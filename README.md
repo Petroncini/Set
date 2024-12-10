@@ -122,3 +122,4 @@ Diferenças principais em relação à árvore AVL:
 - Robert Sedgewick:
   - Left-leaning Red-Black Trees: https://sedgewick.io/wp-content/themes/sedgewick/papers/2008LLRB.pdf
   - https://pdfs.semanticscholar.org/80d8/531ce3c7ad5dbf18e659addb71ed3539f395.pdf
+- Eddie Kohler (Harvard): https://read.seas.harvard.edu/~kohler/notes/llrb.html
