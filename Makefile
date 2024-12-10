@@ -31,3 +31,7 @@ rebuild: clean all
 
 # Phony targets
 .PHONY: all clean rebuild
+
+zip:
+	zip -r zip Makefile main.c avl.c avl.h README.md set.c set.h avl_tests/ rbt_tests/
+
