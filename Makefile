@@ -33,5 +33,5 @@ rebuild: clean all
 .PHONY: all clean rebuild
 
 zip:
-	zip -r Petroncini_Veiga Makefile main.c avl.c avl.h README.md set.c set.h avl_tests/ rbt_tests/
+	zip -r Petroncini_Veiga Makefile main.c avl.c avl.h relatorio.md set.c set.h avl_tests/ rbt_tests/
 
